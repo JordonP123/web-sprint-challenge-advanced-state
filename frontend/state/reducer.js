@@ -1,9 +1,18 @@
 // ❗ You don't need to add extra reducers to achieve MVP
 import { combineReducers } from 'redux'
+import * as type from './action-types'
 
 const initialWheelState = 0
 function wheel(state = initialWheelState, action) {
-  return state
+  switch(action.type){
+    case type.MOVE_CLOCKWISE: {
+      return state >= 5 ? state = initialWheelState : state + action.payload
+    }
+    case type.MOVE_COUNTERCLOCKWISE: {
+      return state <= 0 ? state = 5 : state - action.payload
+    }
+    default: return state
+  }
 }
 
 const initialQuizState = null

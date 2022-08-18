@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as actionCreators from '../state/action-creators'
+import * as actions from '../state/action-creators'
 
 export function Form(props) {
 
@@ -23,4 +23,4 @@ export function Form(props) {
   )
 }
 
-export default connect(st => st, actionCreators)(Form)
+export default connect(st => st, actions)(Form)
