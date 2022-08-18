@@ -1,33 +1,46 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../state/action-creators'
 
 function Quiz(props) {
+
+  useEffect(()=> {
+    props.fetchQuiz()
+  }, [])
+
+  const onSubmit = () => {
+    props.postAnswer(props.selectedAnswer, props.quiz.state.quiz_id)
+    props.fetchQuiz()
+  }
+
+ const selectAnswer = (index) => {
+  props.selectAnswer(props.quiz.state.answers[index].answer_id)
+ }
   return (
     <div id="wrapper">
       {
         // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
-        true ? (
+        props.quiz.state ? (
           <>
-            <h2>What is a closure?</h2>
+            <h2>{props.quiz.state.question}</h2>
 
             <div id="quizAnswers">
-              <div className="answer selected">
-                A function
-                <button>
-                  SELECTED
+            <div className = { props.selectedAnswer !== props.quiz.state.answers[0].answer_id ?  'answer ' : 'answer selected'} /*selected*/ >
+            {props.quiz.state.answers[0].text}
+                <button onClick={()=>selectAnswer(0)}>
+                { props.selectedAnswer !== props.quiz.state.answers[0].answer_id ?   'Select ' : 'SELECTED'}
                 </button>
               </div>
 
-              <div className="answer">
-                An elephant
-                <button>
-                  Select
+              <div className={ props.selectedAnswer !== props.quiz.state.answers[1].answer_id ?   'answer ' : 'answer selected'}>
+              {props.quiz.state.answers[1].text}
+                <button onClick={()=>selectAnswer(1)}>
+                { props.selectedAnswer !== props.quiz.state.answers[1].answer_id ?   'Select ' : 'SELECTED'}
                 </button>
               </div>
             </div>
 
-            <button id="submitAnswerBtn">Submit answer</button>
+            <button disabled={!props.selectedAnswer ? true : false} onClick={onSubmit} id="submitAnswerBtn">Submit answer</button>
           </>
         ) : 'Loading next quiz...'
       }

@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../state/action-creators'
 
 export function Form(props) {
+
+
+  useEffect(()=> {
+    props.fetchQuiz()
+  },[])
 
   const onChange = evt => {
 
   }
 
   const onSubmit = evt => {
-
+    evt.preventDefault()
   }
 
   return (
