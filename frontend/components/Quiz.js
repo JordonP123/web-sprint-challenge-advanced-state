@@ -10,12 +10,11 @@ function Quiz(props) {
 
   const onSubmit = () => {
     props.postAnswer(props.selectedAnswer, props.quiz.state.quiz_id)
-    props.fetchQuiz()
   }
 
- const selectAnswer = (index) => {
-  props.selectAnswer(props.quiz.state.answers[index].answer_id)
- }
+  const selectAnswer = (index) => {
+    props.selectAnswer(props.quiz.state.answers[index].answer_id)
+   }
   return (
     <div id="wrapper">
       {
